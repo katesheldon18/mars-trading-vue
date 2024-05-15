@@ -1,40 +1,56 @@
 <script>
-import Counter from './Counter.vue';
+import Counter from "./Counter.vue";
 
 export default {
-  name: 'TradingTable',
+  name: "TradingTable",
   components: {
-    Counter
+    Counter,
   },
   data() {
-    return {
-      headers: ['Header 1', 'Header 2', 'Header 3', 'Header 4', 'Header 5', 'Header 6', 'Header 7'],
-      tableData: [
-        ['Oxygen', 'Oxygen', 'Oxygen'],
-        ['Oxygen', 'Oxygen', 'Oxygen'],
-        ['Oxygen', 'Oxygen', 'Oxygen'],
-        ['Oxygen', 'Oxygen', 'Oxygen'],
-        ['Oxygen', 'Oxygen', 'Oxygen'],
-        ['Oxygen', 'Oxygen', 'Oxygen'],
-        ['Total', 0, 0]
-      ]
+      return {
+          tableData: [],
     };
+  },
+  methods: {
+    async fetchData() {
+      try {
+        const response = await fetch("https://www.blackpepper.co.nz/api/martian");
+        this.tableData = await response.json();
+        console.log(this.tableData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    },
+    },
+    mounted() {
+        this.fetchData();
   }
 };
 </script>
 
 <template>
-    <div class="container">
-        <Counter :initialCount="0"/>
-        <table>
-            <div class="traders"></div>
-            <tbody>
-                <tr v-for="(row, rowIndex) in tableData" :key="rowIndex">
-                    <td v-for="(cell, cellIndex) in row" :key="cellIndex">{{ cell }}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+  <div class="container">
+    <Counter :initialCount="0" />
+    <div>{{ tableData }}</div>
+    <table>
+      <div class="traders"></div>
+      <thead>
+        <tr>
+          <td>Hello world heading</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Hello world cells</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td>Total</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
 </template>
 
 <style scoped>
@@ -43,21 +59,5 @@ h1 {
   font-size: 2.6rem;
   position: relative;
   top: -10px;
-}
-
-h3 {
-  font-size: 1.2rem;
-}
-
-.greetings h1,
-.greetings h3 {
-  text-align: center;
-}
-
-@media (min-width: 1024px) {
-  .greetings h1,
-  .greetings h3 {
-    text-align: left;
-  }
 }
 </style>

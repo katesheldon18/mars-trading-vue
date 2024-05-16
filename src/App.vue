@@ -12,8 +12,3 @@ import TradingTable from "./components/TradingTable.vue";
   </main>
 </template>
 
-<style scoped>
-* {
-  background-image: url(./assets/bg.png);
-}
-</style>

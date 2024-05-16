@@ -1,12 +1,11 @@
-* {
-  background-color: #050505;
-  color: #FFFFFF;;
+body {
+  background: linear-gradient(90deg, #500005 0%, #500100 5%, black 50%);
+  color: #ffffff;
 }
 
 #app {
-  max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   font-weight: normal;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }

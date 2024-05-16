@@ -10,11 +10,14 @@ export default {
   data() {
     return {
       count: this.initialCount,
+      maxCount: 5,
     };
   },
   methods: {
     increment() {
-      this.count++;
+      if (this.count < this.maxCount) {
+        this.count++;
+      }
       this.$emit("updateCount", this.count);
     },
     decrement() {
@@ -30,7 +33,7 @@ export default {
 <template>
   <div class="container">
     <button class="change-count" @click="decrement">-</button>
-    <span>{{ count }} / {{ count }}</span>
+    <span>{{ count }} / {{ maxCount }}</span>
     <button class="change-count" @click="increment">+</button>
   </div>
 </template>

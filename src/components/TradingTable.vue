@@ -8,8 +8,8 @@ export default {
   },
   data() {
     return {
-      tradingData: [],
-      itemData: [],
+      tradingData: {},
+      itemData: {},
       selectedTrader: "",
     };
   },
@@ -37,6 +37,16 @@ export default {
       }
     },
   },
+  computed: {
+    traderItems() {
+      if (!this.selectedTrader) return [];
+      const trader = this.tradingData.data.find(
+        (trader) => trader.name === this.selectedTrader
+      );
+      if (!trader) return [];
+      return trader.inventory.map((item) => item.quantity);
+    },
+  },
   mounted() {
     this.fetchData();
     this.fetchItems();
@@ -47,28 +57,21 @@ export default {
 <template>
   <div class="container">
     <h1 class="heading">MARS TRADING PLATFORM</h1>
-    <div class="dropdowns">
-      <div></div>
-      <select>
-        <option class="dropdown dropdown1">Select</option>
+    <div class="dropdown-container">
+      <select class="dropdown dropdown1" v-model="selectedTrader">
+        <option>Select</option>
         <option v-for="trader in tradingData.data" :key="trader.name">
           {{ trader.name }}
         </option>
       </select>
-      <select>
-        <option class="dropdown dropdown1">Select</option>
+      <select class="dropdown dropdown1">
+        <option>Select</option>
         <option v-for="trader in tradingData.data" :key="trader.name">
           {{ trader.name }}
         </option>
       </select>
     </div>
     <table>
-      <thead>
-        <td></td>
-        <td v-for="trader in tradingData.data" :key="trader.name">
-          {{ trader.name }}
-        </td>
-      </thead>
       <tbody>
         <tr v-for="item in itemData.data" :key="item.name">
           {{
@@ -98,9 +101,6 @@ h1 {
   line-height: 24px;
   letter-spacing: 2px;
 }
-.dropdowns {
-  display: flex;
-}
 .dropdown {
   padding: 12px;
   margin: 12px;
@@ -113,12 +113,11 @@ h1 {
   text-align: center;
   border-radius: 48px;
   padding: 8px 55px;
-  margin: 0px 12px;
+  margin: 48px;
   cursor: pointer;
 }
 .btn-reset {
-  /* border: 1px solid #ffffff; */
-  border: 1px solid black;
+  border: 1px solid #ffffff;
   background-color: transparent;
 }
 .btn-trade {

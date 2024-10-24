@@ -10,7 +10,8 @@ export default {
     return {
       tradingData: {},
       itemData: {},
-      selectedTrader: "",
+      selectedTrader1: "",
+      selectedTrader2: "",
     };
   },
   methods: {
@@ -58,15 +59,23 @@ export default {
   <div class="container">
     <h1 class="heading">MARS TRADING PLATFORM</h1>
     <div class="dropdown-container">
-      <select class="dropdown dropdown1" v-model="selectedTrader">
+      <select class="dropdown dropdown1" v-model="selectedTrader1">
         <option>Select</option>
-        <option v-for="trader in tradingData.data" :key="trader.name">
+        <option 
+          v-for="trader in tradingData.data" 
+          :key="trader.name"
+          :disabled="trader.name === selectedTrader2"
+          :value="trader.name">
           {{ trader.name }}
         </option>
       </select>
-      <select class="dropdown dropdown1">
+      <select class="dropdown dropdown2" v-model="selectedTrader2">
         <option>Select</option>
-        <option v-for="trader in tradingData.data" :key="trader.name">
+        <option 
+          v-for="trader in tradingData.data" 
+          :key="trader.name"
+          :disabled="trader.name === selectedTrader1"
+          :value="trader.name">
           {{ trader.name }}
         </option>
       </select>

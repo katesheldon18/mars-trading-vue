@@ -1,17 +1,20 @@
 <script>
 export default {
   name: "Counter",
-  props: {
-    initialCount: {
-      type: Number,
-      default: 0,
-    },
-  },
   data() {
     return {
       count: this.initialCount,
-      maxCount: 5,
     };
+  },
+  props: {
+    initialCount: {
+      type: Number,
+      default: 0
+    },
+    maxCount: {
+      type: Number,
+      required: true,
+    },
   },
   methods: {
     increment() {

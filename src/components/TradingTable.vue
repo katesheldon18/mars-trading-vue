@@ -9,7 +9,7 @@ export default {
   data() {
     return {
       tradingData: {},
-      itemData: {},
+      // itemData: {},
       selectedTrader1: "",
       selectedTrader2: "",
     };
@@ -39,15 +39,21 @@ export default {
     },
   },
   computed: {
-    traderItems() {
-      if (!this.selectedTrader) return [];
-      const trader = this.tradingData.data.find(
-        (trader) => trader.name === this.selectedTrader
-      );
-      if (!trader) return [];
-      return trader.inventory.map((item) => item.quantity);
-    },
+  trader1Items() {
+    if (!this.selectedTrader1) return [];
+    const trader = this.tradingData.data?.find(
+      (trader) => trader.name === this.selectedTrader1
+    );
+    return trader ? trader.inventory : [];
   },
+  trader2Items() {
+    if (!this.selectedTrader2) return [];
+    const trader = this.tradingData.data?.find(
+      (trader) => trader.name === this.selectedTrader2
+    );
+    return trader ? trader.inventory : [];
+  }
+},
   mounted() {
     this.fetchData();
     this.fetchItems();
@@ -80,14 +86,14 @@ export default {
         </option>
       </select>
     </div>
-    <table>
+    <table v-if="trader1Items.length > 0 || trader2Items.length > 0">
       <tbody>
-        <tr v-for="item in itemData.data" :key="item.name">
+        <tr v-for="(item, index) in itemData.data || []" :key="item.name">
           {{
             item.name
           }}
-          <td><Counter /></td>
-          <td><Counter /></td>
+          <td><Counter :maxCount="trader1Items[index]?.quantity || 0"/></td>
+          <td><Counter :maxCount="trader2Items[index]?.quantity || 0"/></td>
         </tr>
       </tbody>
       <tfoot>

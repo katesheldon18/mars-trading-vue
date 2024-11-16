@@ -45,9 +45,13 @@ export default {
 .container {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  width: 129px;
 }
 .change-count {
   border: 1px solid #808080;
+  color: #7F7F7F;
+
   border-radius: 99%;
   background-color: transparent;
   cursor: pointer;

@@ -9,7 +9,6 @@ export default {
   data() {
     return {
       tradingData: {},
-      // itemData: {},
       selectedTrader1: "",
       selectedTrader2: "",
     };
@@ -65,35 +64,41 @@ export default {
   <div class="container">
     <h1 class="heading">MARS TRADING PLATFORM</h1>
     <div class="dropdown-container">
-      <select class="dropdown dropdown1" v-model="selectedTrader1">
-        <option>Select</option>
-        <option 
-          v-for="trader in tradingData.data" 
-          :key="trader.name"
-          :disabled="trader.name === selectedTrader2"
-          :value="trader.name">
-          {{ trader.name }}
-        </option>
-      </select>
-      <select class="dropdown dropdown2" v-model="selectedTrader2">
-        <option>Select</option>
-        <option 
-          v-for="trader in tradingData.data" 
-          :key="trader.name"
-          :disabled="trader.name === selectedTrader1"
-          :value="trader.name">
-          {{ trader.name }}
-        </option>
-      </select>
+      <div class="dropdown-wrapper">
+        <label for="dropdown1">Trader 1</label>
+        <select class="dropdown" id="dropdown1" v-model="selectedTrader1">
+          <option disabled hidden value="">Select</option>
+          <option 
+            v-for="trader in tradingData.data" 
+            :key="trader.name"
+            :disabled="trader.name === selectedTrader2"
+            :value="trader.name">
+            {{ trader.name }}
+          </option>
+        </select>
+      </div>
+      <div class="dropdown-wrapper">
+        <label for="dropdown2">Trader 2</label>
+        <select class="dropdown" id="dropdown2" v-model="selectedTrader2">
+          <option disabled hidden value="">Select</option>
+          <option 
+            v-for="trader in tradingData.data" 
+            :key="trader.name"
+            :disabled="trader.name === selectedTrader1"
+            :value="trader.name">
+            {{ trader.name }}
+          </option>
+        </select>
+      </div>
     </div>
     <table v-if="trader1Items.length > 0 || trader2Items.length > 0">
       <tbody>
-        <tr v-for="(item, index) in itemData.data || []" :key="item.name">
+        <tr v-for="(item, index) in itemData.data || []" :key="item.name" :class="{'odd-row' : index % 2 !== 1}">
           {{
             item.name
           }}
-          <td><Counter :maxCount="trader1Items[index]?.quantity || 0"/></td>
-          <td><Counter :maxCount="trader2Items[index]?.quantity || 0"/></td>
+          <td class="count"><Counter :maxCount="trader1Items[index]?.quantity || 0"/></td>
+          <td class="count"><Counter :maxCount="trader2Items[index]?.quantity || 0"/></td>
         </tr>
       </tbody>
       <tfoot>
@@ -116,9 +121,41 @@ h1 {
   line-height: 24px;
   letter-spacing: 2px;
 }
+.dropdown-container {
+  display: flex;
+  height: 5rem;
+  align-items: center;
+  gap: 0.5rem;
+}
+.dropdown-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.dropdown-wrapper label {
+  font-size: 0.75rem;
+}
 .dropdown {
-  padding: 12px;
-  margin: 12px;
+  background-color: transparent;
+  border: none;
+  color: white;
+  width: 12rem;
+  font-size: 0.875rem;
+}
+table {
+  border-collapse: collapse;
+}
+tr {
+  vertical-align: initial;
+}
+.odd-row {
+  background-color: #FFFFFF1A;
+  opacity: 0.9;
+}
+.count {
+  color: #7F7F7F;
+  padding: 1.75rem 0;
 }
 .btn {
   font-size: 14px;

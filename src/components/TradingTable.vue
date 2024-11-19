@@ -91,9 +91,9 @@ export default {
         </select>
       </div>
     </div>
-    <table v-if="trader1Items.length > 0 || trader2Items.length > 0">
+    <table>
       <tbody>
-        <tr v-for="(item, index) in itemData.data || []" :key="item.name" :class="{'odd-row' : index % 2 !== 1}">
+        <tr v-for="(item, index) in itemData?.data" :key="item.name" :class="{'odd-row' : index % 2 !== 1}">
           {{
             item.name
           }}
@@ -113,6 +113,14 @@ export default {
     </div>
   </div>
 </template>
+
+<style>
+body {
+  background-image: url('@/assets/bg.png');
+  background-size: cover;
+  background-position: center;
+}
+</style>
 
 <style scoped>
 h1 {
